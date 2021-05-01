@@ -16,6 +16,7 @@ import { AdapterService } from '../adapter.service';
 export class AddEditComponent implements OnInit {
   addStudentForm: any = FormGroup;
   id: any = '';
+  studentDetail: any;
   classes: any = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   subjects: any = [
     'English',
@@ -26,7 +27,7 @@ export class AddEditComponent implements OnInit {
     'Chemistry',
     'Biology',
   ];
-  studentDetail: any;
+
   constructor(
     private formBuilder: FormBuilder,
     private _sharedService: AdapterService,
