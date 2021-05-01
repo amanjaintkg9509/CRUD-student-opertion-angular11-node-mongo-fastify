@@ -33,10 +33,10 @@ export class AddEditComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.route.params.subscribe((id) => {
-      this.id = id;
+      this.id = id.id;
     });
-    if (this.id.id) {
-      this._sharedService.get('student/' + this.id.id).subscribe((res: any) => {
+    if (this.id) {
+      this._sharedService.get('student/' + this.id).subscribe((res: any) => {
         try {
           this.studentDetail = res;
           this.addStudentForm.patchValue(this.studentDetail);
@@ -67,9 +67,9 @@ export class AddEditComponent implements OnInit {
       return;
     }
 
-    if (this.id && this.id.id) {
+    if (this.id) {
       this._sharedService
-        .put('student/' + this.id.id, this.addStudentForm.value)
+        .put('student/' + this.id, this.addStudentForm.value)
         .subscribe((res: any) => {
           try {
             this.addStudentForm.reset();
