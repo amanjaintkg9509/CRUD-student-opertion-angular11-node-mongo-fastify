@@ -1,0 +1,113 @@
+<div class="col-md-9 justify-content-md-center pad">
+  <div class="modal-content">
+    <form [formGroup]="addStudentForm" (ngSubmit)="onSubmit()">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ id ? "Update" : "Create" }} Student</h5>
+      </div>
+      <div class="modal-body pb-0">
+        <div class="form-row">
+          <div class="col-md-6 mb-3">
+            <label for="name">First Name</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter First Name"
+              formControlName="firstName"
+            />
+
+            <div
+              *ngIf="f.firstName.errors && f.firstName.touched"
+              class="text-danger mt-1"
+            >
+              <div *ngIf="f.firstName.errors.required">
+                First Name is required
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="name">Last Name</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter Last Name"
+              formControlName="lastName"
+            />
+
+            <div
+              *ngIf="f.lastName.errors && f.lastName.touched"
+              class="text-danger mt-1"
+            >
+              <div *ngIf="f.lastName.errors.required">
+                Last Name is required
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label>Subject</label>
+            <select formControlName="subject" class="form-control">
+              <option value="">Select Subject</option>
+              <option *ngFor="let sub of subjects" [value]="sub">
+                {{ sub }}
+              </option>
+            </select>
+            <div
+              *ngIf="f.subject.touched && f.subject.invalid"
+              class="text-danger mt-1"
+            >
+              <div *ngIf="f.subject.errors && f.subject.errors.required">
+                Subject is required.
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label>Class</label>
+            <select formControlName="class" class="form-control">
+              <option value="">Select Class</option>
+              <option *ngFor="let cls of classes" [value]="cls">
+                {{ cls }}
+              </option>
+            </select>
+            <div
+              *ngIf="f.class.touched && f.class.invalid"
+              class="text-danger mt-1"
+            >
+              <div *ngIf="f.class.errors && f.class.errors.required">
+                Class is required.
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="name">Marks</label>
+            <input
+              type="Number"
+              class="form-control"
+              placeholder="Enter Marks"
+              formControlName="marks"
+              min="1"
+              max="100"
+            />
+
+            <div
+              *ngIf="f.marks.errors && f.marks.touched"
+              class="text-danger mt-1"
+            >
+              <div *ngIf="f.marks.errors.required">Marks is required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-black btn-md my-0 ml-0 mr-2"
+          routerLink="/"
+        >
+          Back
+        </button>
+        <button type="submit" class="btn btn-primary btn-md m-0">
+          {{ id ? "Update" : "Create" }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

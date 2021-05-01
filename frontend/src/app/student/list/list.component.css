@@ -1,0 +1,38 @@
+.center-f {
+  position: relative;
+  top: 10%;
+  background: ghostwhite;
+  border-radius: 6px;
+}
+
+table {
+  text-align: center;
+}
+
+.f-right {
+  float: right;
+}
+
+.f-just-around {
+  display: flex;
+  justify-content: space-around;
+  padding: 25px;
+  align-items: center;
+}
+
+input {
+  margin-right: 4vw;
+}
+
+a {
+  cursor: pointer;
+  color: blue;
+}
+
+input, select, button {
+  height: 5vh;
+  width: 18vw;
+  border-radius: 10px;
+  padding-left: 10px;
+  outline: none;
+}

@@ -1,0 +1,56 @@
+<div class="center-f">
+  <div class="f-just-around">
+    <div class="f-just-around">
+      <input
+        placeholder="Enter Search Name, Subject.."
+        #searchText
+        (keyup)="searchData(searchText.value)"
+      />
+      <select (change)="filter($event)">
+        <option *ngFor="let filtr of options" [value]="filtr._id">
+          {{ filtr.key }}
+        </option>
+      </select>
+    </div>
+    <div>
+      <button routerLink="add">Add Student</button>
+    </div>
+  </div>
+  <table class="table" border="1">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Class</th>
+        <th scope="col">Subject</th>
+        <th scope="col">Marks</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="
+          let lis of students | paginate: { itemsPerPage: 5, currentPage: p };
+          let i = index
+        "
+      >
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{ lis.firstName }}</td>
+        <td>{{ lis.lastName }}</td>
+        <td>{{ lis.class }}</td>
+        <td>{{ lis.subject }}</td>
+        <td>{{ lis.marks }}</td>
+        <td>
+          <a routerLink="edit/{{ lis._id }}">Edit</a>|<a
+            (click)="deleteRecord(lis._id)"
+            >Delete</a
+          >
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="f-right">
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
+</div>
