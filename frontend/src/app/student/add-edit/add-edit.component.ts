@@ -4,6 +4,7 @@ import {
   FormControl,
   FormGroup,
   Validators,
+  FormArray,
 } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AdapterService } from '../adapter.service';
@@ -27,6 +28,7 @@ export class AddEditComponent implements OnInit {
     'Biology',
   ];
   studentDetail: any;
+  subjectMarks: any = FormArray;
   constructor(
     private formBuilder: FormBuilder,
     private _sharedService: AdapterService,
@@ -40,6 +42,7 @@ export class AddEditComponent implements OnInit {
         try {
           this.studentDetail = res;
           this.addStudentForm.patchValue(this.studentDetail);
+          this.setExpenseSubjectMarks();
         } catch (err) {
           throw err;
         }
@@ -52,8 +55,7 @@ export class AddEditComponent implements OnInit {
       firstName: new FormControl('', [Validators.required]),
       lastName: new FormControl('', [Validators.required]),
       class: new FormControl('', [Validators.required]),
-      subject: new FormControl('', [Validators.required]),
-      marks: new FormControl('', [Validators.required]),
+      subjectMarks: this.formBuilder.array([]),
     });
   }
 
@@ -66,7 +68,6 @@ export class AddEditComponent implements OnInit {
     if (this.addStudentForm.invalid) {
       return;
     }
-
     if (this.id) {
       this._sharedService
         .put('student/' + this.id, this.addStudentForm.value)
@@ -90,5 +91,24 @@ export class AddEditComponent implements OnInit {
           throw err;
         }
       });
+  }
+
+  createItem(): FormGroup {
+    return this.formBuilder.group({
+      subject: '',
+      marks: '',
+    });
+  }
+
+  addItem(): void {
+    this.subjectMarks = this.addStudentForm.get('subjectMarks') as FormArray;
+    this.subjectMarks.push(this.createItem());
+  }
+
+  setExpenseSubjectMarks() {
+    let control = <FormArray>this.addStudentForm.controls.subjectMarks;
+    this.studentDetail.subjectMarks.forEach((x: any) => {
+      control.push(this.formBuilder.group(x));
+    });
   }
 }

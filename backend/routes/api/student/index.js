@@ -9,9 +9,21 @@ module.exports = async function (fastify, opts) {
     try {
       let obj ={};
       if(request.query.filterName && request.query.searchText){
-        obj[request.query.filterName] = { $regex: request.query.searchText, '$options': 'i' } 
+
+        // if(request.query.filterName === 'class'){
+        //   let valueSearch = parseInt(request.query.searchText)
+        //   obj[request.query.filterName] = { $regex: valueSearch, '$options': 'i' } 
+        // }
+
+        if(request.query.filterName === 'subject'){
+          obj['subjectMarks.subject'] = { $regex: request.query.searchText, '$options': 'i' } 
+        }
+
+        if(request.query.filterName === 'firstName' || request.query.filterName === 'lastName'){
+          obj[request.query.filterName] = { $regex: request.query.searchText, '$options': 'i' } 
+        }
+        
       }
-      console.log(obj)
       const students = await Student.find(obj)
       reply.status(200).send(students)
     } catch (err) {

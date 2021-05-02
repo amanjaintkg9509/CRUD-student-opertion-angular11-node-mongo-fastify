@@ -6,7 +6,7 @@
       </div>
       <div class="modal-body pb-0">
         <div class="form-row">
-          <div class="col-md-6 mb-3">
+          <div class="col-md-4 mb-3">
             <label for="name">First Name</label>
             <input
               type="text"
@@ -24,7 +24,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6 mb-3">
+          <div class="col-md-4 mb-3">
             <label for="name">Last Name</label>
             <input
               type="text"
@@ -39,23 +39,6 @@
             >
               <div *ngIf="f.lastName.errors.required">
                 Last Name is required
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 mb-3">
-            <label>Subject</label>
-            <select formControlName="subject" class="form-control">
-              <option value="">Select Subject</option>
-              <option *ngFor="let sub of subjects" [value]="sub">
-                {{ sub }}
-              </option>
-            </select>
-            <div
-              *ngIf="f.subject.touched && f.subject.invalid"
-              class="text-danger mt-1"
-            >
-              <div *ngIf="f.subject.errors && f.subject.errors.required">
-                Subject is required.
               </div>
             </div>
           </div>
@@ -76,23 +59,43 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4 mb-3">
-            <label for="name">Marks</label>
-            <input
-              type="Number"
-              class="form-control"
-              placeholder="Enter Marks"
-              formControlName="marks"
-              min="1"
-              max="100"
-            />
-
+          <div>
             <div
-              *ngIf="f.marks.errors && f.marks.touched"
-              class="text-danger mt-1"
+              formArrayName="subjectMarks"
+              *ngFor="
+                let item of addStudentForm.get('subjectMarks')['controls'];
+                let i = index
+              "
             >
-              <div *ngIf="f.marks.errors.required">Marks is required</div>
+              <div class="f-center" [formGroupName]="i">
+                <div class="col-md-6 mb-3">
+                  <label>Subject</label>
+                  <select formControlName="subject" class="form-control">
+                    <option value="">Select Subject</option>
+                    <option *ngFor="let sub of subjects" [value]="sub">
+                      {{ sub }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label>Marks</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    formControlName="marks"
+                    placeholder="Enter Marks"
+                  />
+                </div>
+              </div>
             </div>
+            <button
+              type="button"
+              class="btn btn-danger btn-md m-0"
+              (click)="addItem()"
+            >
+              Add Subject
+            </button>
           </div>
         </div>
       </div>

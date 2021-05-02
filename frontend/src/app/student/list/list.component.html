@@ -28,19 +28,27 @@
         <th scope="col">Actions</th>
       </tr>
     </thead>
-    <tbody>
-      <tr
-        *ngFor="
-          let lis of students | paginate: { itemsPerPage: 5, currentPage: p };
-          let i = index
-        "
-      >
-        <th scope="row">{{ i + 1 }}</th>
-        <td>{{ lis.firstName }}</td>
-        <td>{{ lis.lastName }}</td>
-        <td>{{ lis.class }}</td>
-        <td>{{ lis.subject }}</td>
-        <td>{{ lis.marks }}</td>
+    <tbody
+      *ngFor="
+        let lis of students | paginate: { itemsPerPage: 5, currentPage: p };
+        let i = index
+      "
+    >
+      <tr *ngFor="let subMarks of lis.subjectMarks; let j = index">
+        <th scope="row">
+          <span *ngIf="j == 0">{{ i + 1 }}</span>
+        </th>
+        <td>
+          <span *ngIf="j == 0">{{ lis.firstName }}</span>
+        </td>
+        <td>
+          <span *ngIf="j == 0">{{ lis.lastName }}</span>
+        </td>
+        <td>
+          <span *ngIf="j == 0">{{ lis.class }}</span>
+        </td>
+        <td>{{ subMarks?.subject }}</td>
+        <td>{{ subMarks?.marks }}</td>
         <td>
           <a routerLink="edit/{{ lis._id }}">Edit</a>|<a
             (click)="deleteRecord(lis._id)"
